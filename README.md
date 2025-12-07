@@ -133,8 +133,13 @@ python sedinet_train.py -c config/config_9percentiles.json
 ```
 
 Subsequently predict using:
-```
+
+```sh
 python sedinet_predict.py -c config/config_9percentiles.json -1 grain_size_global/res/global_9prcs_simo_batch12_im768_768_9vars_pinball_noaug.hdf5 -2 grain_size_global/res/global_9prcs_simo_batch13_im768_768_9vars_pinball_noaug.hdf5 -3 grain_size_global/res/global_9prcs_simo_batch14_im768_768_9vars_pinball_noaug.hdf5
+```
+
+```sh
+python sedinet_predict.py -c run/config.json -w run/sedinet.weights.h5
 ```
 
 The above model has been trained with multiple batch size of 12, 13 and 14, with 768x768 pixel imagery, no augmentation, and no variable scaling

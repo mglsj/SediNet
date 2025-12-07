@@ -1,4 +1,3 @@
-
 ## Written by Daniel Buscombe,
 ## MARDA Science
 ## daniel@mardascience.com
@@ -11,23 +10,23 @@
 # size of image in pixels. keep this consistent in training and application
 # suggestd: 512 -- 1024 (larger = larger GPU required)
 # integer
-IM_HEIGHT = 768 #768
-IM_WIDTH = IM_HEIGHT #1024 #IM_HEIGHT
+IM_HEIGHT = 512  # 768
+IM_WIDTH = IM_HEIGHT  # 1024 #IM_HEIGHT
 
 # number of images to feed the network per step in epoch #suggested: 4 --16
 # integer
 BATCH_SIZE = 12
 
-#use an ensemble of batch sizes like this
-#BATCH_SIZE = [7,12,14]
+# use an ensemble of batch sizes like this
+# BATCH_SIZE = [7,12,14]
 
 # if True, use a smaller (shallower) network architecture
 ##True or False ##False=larger network
-SHALLOW = False #True
+SHALLOW = False  # True
 
 ## if True, carry out data augmentation. 2 x number of images used in training
 ##True or False
-DO_AUG = False #True
+DO_AUG = False  # True
 
 # maximum learning rate ##1e-1 -- 1e-4
 MAX_LR = 1e-3
@@ -37,15 +36,15 @@ MAX_LR = 1e-3
 NUM_EPOCHS = 100
 
 ## loss function for continuous models (2 choices)
-CONT_LOSS = 'pinball'
-#CONT_LOSS = 'mse'
+CONT_LOSS = "pinball"
+# CONT_LOSS = 'mse'
 
 ## loss function for categorical (disrete) models (2 choices)
-CAT_LOSS = 'focal'
-#CAT_LOSS = 'categorical_crossentropy'
+CAT_LOSS = "focal"
+# CAT_LOSS = 'categorical_crossentropy'
 
 # optimizer (gradient descent solver) good alternative == 'rmsprop'
-OPT = 'rmsprop' #'adam'
+OPT = "rmsprop"  #'adam'
 
 # base number of conv2d filters in categorical models
 # integer
@@ -57,7 +56,7 @@ BASE_CONT = 30
 
 # number of Dense units for continuous prediction
 # integer
-CONT_DENSE_UNITS = 1024 #512
+CONT_DENSE_UNITS = 1024  # 512
 
 # number of Dense units for categorical prediction
 # integer

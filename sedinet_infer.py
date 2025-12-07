@@ -140,17 +140,17 @@ def train_sedinet_cat(SM, train_df, test_df, train_idx, test_idx,
     if SHALLOW is True:
        if DO_AUG is True:
            weights_path = name+"_"+mode+"_batch"+str(batch_size)+"_im"+str(IM_HEIGHT)+\
-                   "_"+str(IM_WIDTH)+"_shallow_"+vars[0]+"_"+CAT_LOSS+"_aug.hdf5"
+                   "_"+str(IM_WIDTH)+"_shallow_"+vars[0]+"_"+CAT_LOSS+"_aug.weights.h5"
        else:
            weights_path = name+"_"+mode+"_batch"+str(batch_size)+"_im"+str(IM_HEIGHT)+\
-                   "_"+str(IM_WIDTH)+"_shallow_"+vars[0]+"_"+CAT_LOSS+"_noaug.hdf5"
+                   "_"+str(IM_WIDTH)+"_shallow_"+vars[0]+"_"+CAT_LOSS+"_noaug.weights.h5"
     else:
        if DO_AUG is True:
            weights_path = name+"_"+mode+"_batch"+str(batch_size)+"_im"+str(IM_HEIGHT)+\
-                   "_"+str(IM_WIDTH)+"_"+vars[0]+"_"+CAT_LOSS+"_aug.hdf5"
+                   "_"+str(IM_WIDTH)+"_"+vars[0]+"_"+CAT_LOSS+"_aug.weights.h5"
        else:
            weights_path = name+"_"+mode+"_batch"+str(batch_size)+"_im"+str(IM_HEIGHT)+\
-                   "_"+str(IM_WIDTH)+"_"+vars[0]+"_"+CAT_LOSS+"_noaug.hdf5"
+                   "_"+str(IM_WIDTH)+"_"+vars[0]+"_"+CAT_LOSS+"_noaug.weights.h5"
 
     if os.path.exists(weights_path):
         SM.load_weights(weights_path)
@@ -168,7 +168,7 @@ def train_sedinet_cat(SM, train_df, test_df, train_idx, test_idx,
     else:
 
         try:
-           plot_model(SM, weights_path.replace('.hdf5', '_model.png'),
+           plot_model(SM, weights_path.replace('.weights.h5', '_model.png'),
                       show_shapes=True, show_layer_names=True)
         except:
            pass
@@ -181,7 +181,7 @@ def train_sedinet_cat(SM, train_df, test_df, train_idx, test_idx,
 
         print("=========================================")
         print("[INFORMATION] schematic of the model has been written out to: "+\
-              weights_path.replace('.hdf5', '_model.png'))
+              weights_path.replace('.weights.h5', '_model.png'))
         print("[INFORMATION] weights will be written out to: "+weights_path)
 
         ##==============================================
@@ -230,12 +230,12 @@ def train_sedinet_cat(SM, train_df, test_df, train_idx, test_idx,
         plot_train_history_1var(history)
         # plt.savefig(vars+'_'+str(IM_HEIGHT)+'_batch'+str(batch_size)+'_history.png', ##BATCH_SIZE
         #             dpi=300, bbox_inches='tight')
-        plt.savefig(weights_path.replace('.hdf5','_history.png'),dpi=300, bbox_inches='tight')
+        plt.savefig(weights_path.replace('.weights.h5','_history.png'),dpi=300, bbox_inches='tight')
         plt.close('all')
 
         # serialize model to JSON to use later to predict
         model_json = SM.to_json()
-        with open(weights_path.replace('.hdf5','.json'), "w") as json_file:
+        with open(weights_path.replace('.weights.h5','.json'), "w") as json_file:
            json_file.write(model_json)
 
     return SM, weights_path
@@ -265,32 +265,32 @@ def train_sedinet_siso_simo(SM, train_df, test_df, train_idx, test_idx, name,
        if DO_AUG is True:
           if scale is True:
               weights_path = name+"_"+mode+"_batch"+str(batch_size)+"_im"+str(IM_HEIGHT)+\
-                   "_"+str(IM_WIDTH)+"_shallow_"+varstring+"_"+CONT_LOSS+"_aug_scale.hdf5"
+                   "_"+str(IM_WIDTH)+"_shallow_"+varstring+"_"+CONT_LOSS+"_aug_scale.weights.h5"
           else:
               weights_path = name+"_"+mode+"_batch"+str(batch_size)+"_im"+str(IM_HEIGHT)+\
-                   "_"+str(IM_WIDTH)+"_shallow_"+varstring+"_"+CONT_LOSS+"_aug.hdf5"
+                   "_"+str(IM_WIDTH)+"_shallow_"+varstring+"_"+CONT_LOSS+"_aug.weights.h5"
        else:
           if scale is True:
               weights_path = name+"_"+mode+"_batch"+str(batch_size)+"_im"+str(IM_HEIGHT)+\
-                   "_"+str(IM_WIDTH)+"_shallow_"+varstring+"_"+CONT_LOSS+"_noaug_scale.hdf5"
+                   "_"+str(IM_WIDTH)+"_shallow_"+varstring+"_"+CONT_LOSS+"_noaug_scale.weights.h5"
           else:
               weights_path = name+"_"+mode+"_batch"+str(batch_size)+"_im"+str(IM_HEIGHT)+\
-                   "_"+str(IM_WIDTH)+"_shallow_"+varstring+"_"+CONT_LOSS+"_noaug.hdf5"
+                   "_"+str(IM_WIDTH)+"_shallow_"+varstring+"_"+CONT_LOSS+"_noaug.weights.h5"
     else:
        if DO_AUG is True:
           if scale is True:
               weights_path = name+"_"+mode+"_batch"+str(batch_size)+"_im"+str(IM_HEIGHT)+\
-                   "_"+str(IM_WIDTH)+"_"+varstring+"_"+CONT_LOSS+"_aug_scale.hdf5"
+                   "_"+str(IM_WIDTH)+"_"+varstring+"_"+CONT_LOSS+"_aug_scale.weights.h5"
           else:
               weights_path = name+"_"+mode+"_batch"+str(batch_size)+"_im"+str(IM_HEIGHT)+\
-                   "_"+str(IM_WIDTH)+"_"+varstring+"_"+CONT_LOSS+"_aug.hdf5"
+                   "_"+str(IM_WIDTH)+"_"+varstring+"_"+CONT_LOSS+"_aug.weights.h5"
        else:
           if scale is True:
               weights_path = name+"_"+mode+"_batch"+str(batch_size)+"_im"+str(IM_HEIGHT)+\
-                   "_"+str(IM_WIDTH)+"_"+varstring+"_"+CONT_LOSS+"_noaug_scale.hdf5"
+                   "_"+str(IM_WIDTH)+"_"+varstring+"_"+CONT_LOSS+"_noaug_scale.weights.h5"
           else:
               weights_path = name+"_"+mode+"_batch"+str(batch_size)+"_im"+str(IM_HEIGHT)+\
-                   "_"+str(IM_WIDTH)+"_"+varstring+"_"+CONT_LOSS+"_noaug.hdf5"
+                   "_"+str(IM_WIDTH)+"_"+varstring+"_"+CONT_LOSS+"_noaug.weights.h5"
 
     # if it already exists, skip training
     if os.path.exists(weights_path):
@@ -313,13 +313,13 @@ def train_sedinet_siso_simo(SM, train_df, test_df, train_idx, test_idx, name,
         if len(CS)==0:
             pass
         else:
-            joblib.dump(CS, weights_path.replace('.hdf5','_scaler.pkl'))
+            joblib.dump(CS, weights_path.replace('.weights.h5','_scaler.pkl'))
 
         try: # plot the model if pydot/graphviz installed
-            plot_model(SM, weights_path.replace('.hdf5', '_model.png'),
+            plot_model(SM, weights_path.replace('.weights.h5', '_model.png'),
                        show_shapes=True, show_layer_names=True)
             print("[INFORMATION] model schematic written to: "+\
-                  weights_path.replace('.hdf5', '_model.png'))
+                  weights_path.replace('.weights.h5', '_model.png'))
         except:
             pass
 
@@ -347,13 +347,13 @@ def train_sedinet_siso_simo(SM, train_df, test_df, train_idx, test_idx, name,
         # callbacks_list = [model_checkpoint, reduceloss_plat, earlystop] #, tqdm_callback]
 
         try: #write summary of the model to txt file
-            with open(weights_path.replace('.hdf5','') + '_report.txt','w') as fh:
+            with open(weights_path.replace('.weights.h5','') + '_report.txt','w') as fh:
                 # Pass the file handle in as a lambda function to make it callable
                 SM.summary(print_fn=lambda x: fh.write(x + '\n'))
             fh.close()
             print("[INFORMATION] model summary written to: "+ \
-                  weights_path.replace('.hdf5','') + '_report.txt')
-            with open(weights_path.replace('.hdf5','') + '_report.txt','r') as fh:
+                  weights_path.replace('.weights.h5','') + '_report.txt')
+            with open(weights_path.replace('.weights.h5','') + '_report.txt','r') as fh:
                 tmp = fh.readlines()
             print("===============================================")
             print("Total parameters: %s" %\
@@ -397,13 +397,13 @@ def train_sedinet_siso_simo(SM, train_df, test_df, train_idx, test_idx, name,
            plot_train_history_Nvar(history, vars, len(vars))
 
         varstring = ''.join([str(k)+'_' for k in vars])
-        plt.savefig(weights_path.replace('.hdf5', '_history.png'), dpi=300,
+        plt.savefig(weights_path.replace('.weights.h5', '_history.png'), dpi=300,
                     bbox_inches='tight')
         plt.close('all')
 
         # serialize model to JSON to use later to predict
         model_json = SM.to_json()
-        with open(weights_path.replace('.hdf5','.json'), "w") as json_file:
+        with open(weights_path.replace('.weights.h5','.json'), "w") as json_file:
            json_file.write(model_json)
 
     return SM, weights_path

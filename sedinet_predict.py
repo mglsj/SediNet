@@ -34,15 +34,15 @@ if __name__ == '__main__':
     try:
         opts, args = getopt.getopt(argv,"h:c:w:1:2:3:4:")
     except getopt.GetoptError:
-        print('python sedinet_predict.py -c configfile.json {-w weightsfile.hdf5} OR {-1 weightsfile_batch1.hdf5 -2 weightsfile_batch2.hdf5 -3 weightsfile_batch3.hdf5 -4 weightsfile_batch4.hdf5}')
+        print('python sedinet_predict.py -c configfile.json {-w weightsfile.weights.h5} OR {-1 weightsfile_batch1.weights.h5 -2 weightsfile_batch2.weights.h5 -3 weightsfile_batch3.weights.h5 -4 weightsfile_batch4.weights.h5}')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('Example usage (single batch / weights file): python sedinet_predict.py -c config/config_mattole.json -w mattole/res/mattole_simo_batch7_im512_512_2vars_pinball_aug.hdf5')
+            print('Example usage (single batch / weights file): python sedinet_predict.py -c config/config_mattole.json -w mattole/res/mattole_simo_batch7_im512_512_2vars_pinball_aug.weights.h5')
             print('Example usage (multiple batches / weights files): python sedinet_predict.py -c config/config_9percentiles.json \
-                   -1 grain_size_global/res/global_9prcs_simo_batch7_im768_9vars_pinball_noaug.hdf5 \
-                   -2 grain_size_global/res/global_9prcs_simo_batch12_im768_9vars_pinball_noaug.hdf5 \
-                   -3 grain_size_global/res/global_9prcs_simo_batch14_im768_9vars_pinball_noaug.hdf5')
+                   -1 grain_size_global/res/global_9prcs_simo_batch7_im768_9vars_pinball_noaug.weights.h5 \
+                   -2 grain_size_global/res/global_9prcs_simo_batch12_im768_9vars_pinball_noaug.weights.h5 \
+                   -3 grain_size_global/res/global_9prcs_simo_batch14_im768_9vars_pinball_noaug.weights.h5')
             sys.exit()
         elif opt in ("-c"):
             configfile = arg

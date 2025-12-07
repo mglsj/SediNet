@@ -1,4 +1,3 @@
-
 ## Written by Daniel Buscombe,
 ## MARDA Science
 ## daniel@mardascience.com
@@ -37,7 +36,12 @@ global MAX_LR, OPT, USE_GPU, DO_AUG
 from tensorflow.keras.layers import Input, Dense, MaxPool2D, GlobalMaxPool2D
 from tensorflow.keras.layers import Dropout, MaxPooling2D, GlobalAveragePooling2D
 from tensorflow.keras.models import Model, Sequential
-from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau, LearningRateScheduler
+from tensorflow.keras.callbacks import (
+    ModelCheckpoint,
+    EarlyStopping,
+    ReduceLROnPlateau,
+    LearningRateScheduler,
+)
 from tensorflow.keras.layers import DepthwiseConv2D, Conv2D, SeparableConv2D
 from tensorflow.keras.layers import BatchNormalization, Activation, concatenate
 
@@ -48,15 +52,18 @@ except:
 
 import tensorflow.keras.backend as K
 from tensorflow.keras.utils import to_categorical
-import tensorflow_addons as tfa
+import tensorflow as tf
 
 ##SKLEARN
-from sklearn.preprocessing import RobustScaler #MinMaxScaler
+from sklearn.preprocessing import RobustScaler  # MinMaxScaler
 from sklearn.metrics import confusion_matrix, classification_report
 
 ##OTHER
 from PIL import Image
 from glob import glob
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -64,7 +71,6 @@ import itertools
 import joblib
 import random
 
-import tensorflow_addons as tfa
-import tqdm
+# import tqdm
 
-from skimage.transform import AffineTransform, warp #rotate,
+from skimage.transform import AffineTransform, warp  # rotate,

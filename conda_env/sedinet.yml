@@ -19,5 +19,4 @@ dependencies:
   - tensorflow-gpu
   - scikit-image
   - pip:
-    - Image
-    - tensorflow-addons    
+      - Image
