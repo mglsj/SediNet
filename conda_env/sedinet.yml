@@ -1,4 +1,3 @@
-#conda env create -f conda_env/sedinet.yml
 name: sedinet
 channels:
   - conda-forge

@@ -25,12 +25,15 @@ global MAX_LR, OPT, USE_GPU, DO_AUG
 # global MIN_DELTA, FACTOR, STOP_PATIENCE
 ##====================================================
 
-# import tensorflow.compat.v1 as tf1
-# config = tf1.ConfigProto()
-# config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
-# config.log_device_placement = True  # to log device placement (on which device the operation ran)
-# sess = tf1.Session(config=config)
-# tf1.keras.backend.set_session(sess)
+import tensorflow as tf
+
+gpus = tf.config.experimental.list_physical_devices("GPU")
+if gpus:
+    try:
+        for gpu in gpus:
+            tf.config.experimental.set_memory_growth(gpu, True)
+    except RuntimeError as e:
+        print(e)
 
 ##TF/keras
 from tensorflow.keras.layers import Input, Dense, MaxPool2D, GlobalMaxPool2D
