@@ -29,8 +29,11 @@ This repository contains code and data to reproduce the above paper, as well as 
 The algorithm implementation has changed since the paper, so the results are  slightly different but the concepts and data, and most of everything, have not changed.
 
 SediNet can be configured and trained to estimate:
+
 * up to nine numeric grain-size metrics in pixels from a single input image. Grain size is then recovered using the physical size of a pixel (note that sedinet doesn't help you estimate that). Appropriate metrics include mean, median or any other percentile
+
 * equivalent sieve diameters directly from image features, without the need for area-to-mass conversion formulas and without even knowing the scale of one pixel. SediNet might be useful for other metrics such as sorting (standard deviation), skewness, etc. There could be multiple quantities that could be estimated from the imagery
+
 * categorical variables such as grain shape, population, colour, etc
 
 The motivating idea behind SediNet is community development of tools for information extraction from images of sediment. You can use SediNet "off-the-shelf", or other people's models, or configure it for your own purposes.
@@ -90,15 +93,18 @@ The following links will open jupyter notebooks in Google Colab, which is a free
 
 --------------------------------------------------------------------------------
 ## Install and run on your computer
+
 You must have python 3, pip for python 3, git and conda. On Windows I recommend the latest [Anaconda](https://www.anaconda.com/distribution/) release.
 
 Windows:
-```
+
+```sh
 git clone --depth 1 https://github.com/MARDAScience/SediNet.git
 ```
 
 Linux/Mac:
-```
+
+```sh
 git clone --depth 1 git@github.com:MARDAScience/SediNet.git
 ```
 
@@ -108,17 +114,18 @@ If you do NOT want to use your GPU for computations with tensorflow, edit the `c
 
 (if you are a regular or long-term conda user, perhaps this is a good time to ```conda clean --packages``` and ```conda update -n base conda```?)
 
-```
+```sh
 conda env create -f conda_env/sedinet.yml
 ```
 
-```
+```sh
 conda activate sedinet
 ```
 
 (Later, when you're done ... ```conda deactivate sedinet```)
 
 --------------------------------------------------------------------------------
+
 ## Train and use the provided example models yourself
 
 The following examples have been selected to demonstrate the range of options you can choose when optimizing a SediNet model for a particular dataset. It therefore serves as a guide, rather than a gallery of best possible model outcomes. I encourage you to experiment with a few sets of options before deciding on a final optimal configuration and defaults file. Sometimes, using multiple batch sizes can be advantageous.
@@ -128,7 +135,7 @@ The following examples have been selected to demonstrate the range of options yo
 
 ##### Train SediNet for sediment grain size prediction (9 percentiles of the cumulative distribution) on a large population of 400 images
 
-```
+```sh
 python sedinet_train.py -c config/config_9percentiles.json
 ```
 
@@ -144,27 +151,27 @@ python sedinet_predict.py -c run/config.json -w run/sedinet.weights.h5
 
 The above model has been trained with multiple batch size of 12, 13 and 14, with 768x768 pixel imagery, no augmentation, and no variable scaling
 
-
 To use the model to predict on a single image:
 
-```
+```sh
 python sedinet_predict1image.py -c config/config_9percentiles.json -i images/Cal_16.tif -1 grain_size_global/res/global_9prcs_simo_batch12_im768_768_9vars_pinball_noaug.hdf5 -2 grain_size_global/res/global_9prcs_simo_batch13_im768_768_9vars_pinball_noaug.hdf5 -3 grain_size_global/res/global_9prcs_simo_batch14_im768_768_9vars_pinball_noaug.hdf5
 ```
 
 To use the model to predict on all images in a folder:
 
-```
+```sh
 python sedinet_predictfolder.py -c config/config_9percentiles.json -w grain_size_global/res/global_9prcs_simo_batch14_im768_768_9vars_pinball_noaug.hdf5 -i images/
 ```
 
 ##### Train SediNet for sediment grain size prediction (4 percentiles of the cumulative distribution plus sieve size) on a small population of beach sands
 
-```
+```sh
 python sedinet_train.py -c config/config_sievedsand_sieve_plus.json
 ```
 
 Subsequently predict using:
-```
+
+```sh
 python sedinet_predict.py -c config/config_sievedsand_sieve_plus.json -w grain_size_sieved_sands/res_sieve_plus/sievesand_sieve_plus_simo_batch8_im512_512_6vars_pinball_aug_scale.hdf5
 ```
 
@@ -172,19 +179,20 @@ The above model has been trained with a single batch size of 8, with 768x768 pix
 
 To use the model to predict on a single image:
 
-```
+```sh
 python sedinet_predict1image.py -c config/config_sievedsand_sieve_plus.json -w grain_size_sieved_sands/res_sieve_plus/sievesand_sieve_plus_simo_batch8_im512_512_6vars_pinball_aug_scale.hdf5 -i images/IMG_0214.JPG
 ```
 
 
 ##### Train SediNet for sediment mid sieve size on a small population of beach sands
 
-```
+```sh
 python sedinet_train.py -c config/config_sievedsand_sieve.json
 ```
 
 Subsequently predict using:
-```
+
+```sh
 python sedinet_predict.py -c config/config_sievedsand_sieve.json -w grain_size_sieved_sands/res_sieve/sievesand_sieve_siso_batch7_im512_512_1vars_pinball_aug_scale.hdf5
 ```
 
@@ -192,7 +200,7 @@ The above model has been trained with a single batch size of 8, with 768x768 pix
 
 To use the model to predict on a single image:
 
-```
+```sh
 python sedinet_predict1image.py -c config/config_sievedsand_sieve.json -w grain_size_sieved_sands/res_sieve/sievesand_sieve_siso_batch7_im512_512_1vars_pinball_aug_scale.hdf5 -i images/IMG_0214.JPG
 ```
 
@@ -202,40 +210,41 @@ python sedinet_predict1image.py -c config/config_sievedsand_sieve.json -w grain_
 
 ##### Train SediNet for sediment population prediction
 
-```
+```sh
 python sedinet_train.py -c config/config_pop.json
 ```
 
 Subsequently predict using:
 
-```
+```sh
 python sedinet_predict.py -c config/config_pop.json -1 grain_population/res/grain_population_siso_batch3_im768_768_pop_focal_noaug.hdf5 -2 grain_population/res/grain_population_siso_batch4_im768_768_pop_focal_noaug.hdf5 -3 grain_population/res/grain_population_siso_batch6_im768_768_pop_focal_noaug.hdf5 -4 grain_population/res/grain_population_siso_batch8_im768_768_pop_focal_noaug.hdf5
 ```
+
 The above model has been trained with multiple batch size of 3, 4, and 6, with 768x768 pixel imagery, no augmentation, and no variable scaling (by default for categorical variables)
 
 To use the model to predict on a single image:
 
-```
+```sh
 python sedinet_predict1image.py -i images/um125_179_1.jpg -c config/config_pop.json -w grain_population/res/grain_population_siso_batch3_im768_768_pop_focal_noaug.hdf5
 ```
 
-
 ##### Train SediNet for sediment shape prediction
 
-```
+```sh
 python sedinet_train.py -c config/config_shape.json
 ```
 
 Subsequently predict using:
 
-```
+```sh
 python sedinet_predict.py -c config/config_shape.json -1 grain_shape/res/grain_shape_siso_batch6_im768_768_shape_focal_noaug.hdf5 -2 grain_shape/res/grain_shape_siso_batch8_im768_768_shape_focal_noaug.hdf5 -3 grain_shape/res/grain_shape_siso_batch10_im768_768_shape_focal_noaug.hdf5
 ```
+
 The above model has been trained with multiple batch size of 6, 8 and 10, with 768x768 pixel imagery, no augmentation, and no variable scaling (by default for categorical variables)
 
 To use the model to predict on a single image (remember to change the `BATCH_SIZE` to a list):
 
-```
+```sh
 python sedinet_predict1image.py -c config/config_shape.json -i images/Cal_16.tif -1 grain_shape/res/grain_shape_siso_batch6_im768_768_shape_focal_noaug.hdf5 -2 grain_shape/res/grain_shape_siso_batch8_im768_768_shape_focal_noaug.hdf5 -3 grain_shape/res/grain_shape_siso_batch10_im768_768_shape_focal_noaug.hdf5
 ```
 
@@ -244,13 +253,13 @@ python sedinet_predict1image.py -c config/config_shape.json -i images/Cal_16.tif
 
 ##### Train SediNet for sediment grain size prediction (9 percentiles of the cumulative distribution) on gravel images
 
-```
+```sh
 python sedinet_train.py -c config/config_gravel.json
 ```
 
 Subsequently predict using:
 
-```
+```sh
 python sedinet_predict.py -c config/config_gravel.json -w grain_size_gravel_generic/res/gravel_generic_9prcs_simo_batch6_im768_768_9vars_pinball_aug.hdf5
 ```
 
@@ -258,18 +267,19 @@ The above model has been trained with a batch size of 6, with 768x768 pixel imag
 
 To use the model to predict on a single image:
 
-```
+```sh
 python sedinet_predict1image.py -c config/config_gravel.json -i images/Cal_16.tif -w grain_size_gravel_generic/res/gravel_generic_9prcs_simo_batch6_im768_768_9vars_pinball_aug.hdf5
 ```
 
 ##### Train SediNet for sediment grain size prediction (9 percentiles of the cumulative distribution) on sand images
 
-```
+```sh
 python sedinet_train.py -c config/config_sand.json
 ```
 
 Subsequently predict using:
-```
+
+```sh
 python sedinet_predict.py -c config/config_sand.json -w grain_size_sand_generic/res_9prcs/sand_generic_9prcs_simo_batch12_im768_768_9vars_pinball_noaug_scale.hdf5
 ```
 
@@ -277,19 +287,20 @@ The above model has been trained with a batch size of 12, with 768x768 pixel ima
 
 To use the model to predict on a single image:
 
-```
+```sh
 python sedinet_predict1image.py -c config/config_sand.json -i images/IMG_1591_1400microns.JPG -w grain_size_sand_generic/res_9prcs/sand_generic_9prcs_simo_batch12_im768_768_9vars_pinball_noaug_scale.hdf5
 ```
 
 
 ##### Train SediNet for sediment grain size prediction (3 percentiles of the cumulative distribution) on sand images
 
-```
+```sh
 python sedinet_train.py -c config/config_sand_3prcs.json
 ```
 
 Subsequently predict using:
-```
+
+```sh
 python sedinet_predict.py -c config/config_sand_3prcs.json -w grain_size_sand_generic/res_3prcs/sand_generic_3prcs_simo_batch12_im768_768_3vars_pinball_noaug_scale.hdf5
 ```
 
@@ -297,20 +308,20 @@ The above model has been trained with a batch size of 12, with 768x768 pixel ima
 
 To use the model to predict on a single image:
 
-```
+```sh
 python sedinet_predict1image.py -c config/config_sand_3prcs.json -i images/IMG_1591_1400microns.JPG -w grain_size_sand_generic/res_3prcs/sand_generic_3prcs_simo_batch12_im768_768_3vars_pinball_noaug_scale.hdf5
 ```
 
 
 ##### Train SediNet for estimating mean size and sorting from images of mixed sand and gravel
 
-```
+```sh
 python sedinet_train.py -c config/mattole.json
 ```
 
 Subsequently predict using:
 
-```
+```sh
 python sedinet_predict.py -c config/config_mattole.json -w mattole/res/mattole_simo_batch7_im512_512_2vars_pinball_aug.hdf5
 ```
 
@@ -318,12 +329,13 @@ The above model has been trained with a batch size of 7, with 768x768 pixel imag
 
 To use the model to predict on a single image:
 
-```
+```sh
 python sedinet_predict1image.py -c config/config_mattole.json -i images/mattole_images/all/DSCN3521c.JPG -w mattole/res/mattole_simo_batch7_im512_512_2vars_pinball_aug.hdf5
 ```
 
 
 --------------------------------------------------------------------------------
+
 ## More details about inputs and using this tool on your own data
 
 ### The config file
@@ -353,8 +365,7 @@ A typical SediNet model configuration for predicting continuous variables is:
 
 Contains values for defaults that you may change. They are listed in order of likelihood that you might change them:
 
-```
-
+```py
 # size of image in pixels. keep this consistent in training and application
 # suggestd: 512 -- 1024 (larger = larger GPU required)
 # integer
@@ -409,27 +420,28 @@ CONT_DENSE_UNITS = 1024 #512
 # number of Dense units for categorical prediction
 # integer
 CAT_DENSE_UNITS = 128
-
 ```
 
 ### Filename convention
 
 For continuously distributed variables, file names are constructed according to the following convention
 
-```
+```txt
 name "_" mode "_batch" batch_size "_im" IM_HEIGHT "_shallow_" varstring "_" CONT_LOSS "_aug_scale.hdf5"
 ```
+
 if imagery is not augmented, `aug` in the above is replaced with `noaug`. If variables are not scaled, `_scale` is missing from the end
 
 For categorical variables, we use
 
-```
+```txt
 name "_" mode "_batch" batch_size "_im" IM_HEIGHT "_shallow_" varstring "_" CAT_LOSS "_aug.hdf5"
 ```
 
 if imagery is not augmented, `aug` in the above is replaced with `noaug`. Categorical variables are never scaled
 
 --------------------------------------------------------------------------------
+
 ## How to use on your own data
 
 SediNet is very configurable. You can specify many variables in the config file, from the size of the imagery to use, to the number of models to ensemble and their respective batch sizes.
@@ -438,13 +450,13 @@ SediNet is very configurable. You can specify many variables in the config file,
 
 The SediNet training function ```train_sedinet_continuous.py``` is set up to predict arbitrary numbers of continuous variables. All your specific information (what data set to use, what to predict, etc) is contained in the config file and called the same way as above. For example:
 
-```
+```sh
 python train_sedinet_continuous.py -c config/config_custom_4prcs.json
 ```
 
 where ```config/config_custom_4prcs.json``` has ben put together by you in the config folder like the following example that would estimate the mean grain size and 4 arbitrary percentiles:
 
-```
+```json
 {
   "train_csvfile" : "your_train_dataset.csv",
   "test_csvfile" : "your_test_dataset.csv",
@@ -470,7 +482,7 @@ where ```config/config_custom_4prcs.json``` has ben put together by you in the c
 
 Put together a config file in the config folder (called, say ```config_custom_colour.json```) and populate it like this example:
 
-```
+```json
 {
   "csvfile" : "dataset_colour.csv",
   "var"     : "colour",
@@ -654,7 +666,7 @@ First, follow instructions [here](https://tudip.com/blog-post/run-jupyter-notebo
 
 Then open a shell into the VM and set it up to
 
-```
+```sh
   ssh-keygen -t rsa -b 4096 -C "yourname@youremail.com"
 
   eval "$(ssh-agent -s)"
@@ -669,7 +681,7 @@ Then copy the key into your github profile keys. For more information about how 
 
 You will be cloning your fork of the main repo, so replace ```YOURUSERNAME``` in the below code to clone the repo and set up a conda environment to run in
 
-```
+```sh
   git clone --depth 1 git@github.com:YOURUSERNAME/SediNet.git
   cd SediNet
 
@@ -684,14 +696,14 @@ Now you can run sedinet on the cloud.
 
 To run the jupyter notebooks, run the following command to run the jupyter notebook server
 
-```
+```sh
   python -m ipykernel install --user
   jupyter notebook --NotebookApp.iopub_data_rate_limit=10000000
 ```
 
 The jupyterlab server will be displayed at
 
-```
+```text
   http://IP:8888
 ```
 
@@ -699,7 +711,9 @@ where ```IP``` is the static IP of the VM that you noted earlier.
 
 
 --------------------------------------------------------------------------------
+
 ## Future plans
+
 * redo and reinstate the jupyter notebooks
 * predict on folder of sample images script
 *  change batch generators into a better keras ones that will allow augmentation etc e.g [this](https://www.kaggle.com/amyjang/tensorflow-cnn-data-augmentation-prostate-cancer) or [this](https://www.kaggle.com/amyjang/tensorflow-pneumonia-classification-on-x-rays)
